@@ -68,6 +68,7 @@ libpthread-routines = nptl-init nptlfreeres vars events version pt-interp \
 		      pthread_getattr_np \
 		      pthread_mutex_init pthread_mutex_destroy \
 		      pthread_mutex_lock pthread_mutex_trylock \
+		      pthread_mutex_lock_any pthread_mutex_timedlock_any \
 		      pthread_mutex_timedlock pthread_mutex_unlock \
 		      pthread_mutex_cond_lock \
 		      pthread_mutexattr_init pthread_mutexattr_destroy \

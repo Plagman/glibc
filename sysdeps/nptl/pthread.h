@@ -763,7 +763,17 @@ extern int pthread_mutex_trylock (pthread_mutex_t *__mutex)
 extern int pthread_mutex_lock (pthread_mutex_t *__mutex)
      __THROWNL __nonnull ((1));
 
+/* Lock any one of several mutexes.  */
+extern int pthread_mutex_lock_any (pthread_mutex_t *__mutexlist,
+				   int mutexcount, int *outlocked);
+
 #ifdef __USE_XOPEN2K
+/* Lock any one of several mutexes, with timeout.  */
+extern int pthread_mutex_timedlock_any (pthread_mutex_t *__mutexlist,
+					int mutexcount,
+					const struct timespec *__restrict
+					__abstime, int *outlocked);
+
 /* Wait until lock becomes available, or specified time passes. */
 extern int pthread_mutex_timedlock (pthread_mutex_t *__restrict __mutex,
 				    const struct timespec *__restrict
