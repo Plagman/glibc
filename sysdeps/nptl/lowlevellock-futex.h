@@ -38,6 +38,7 @@
 #define FUTEX_WAKE_BITSET	10
 #define FUTEX_WAIT_REQUEUE_PI   11
 #define FUTEX_CMP_REQUEUE_PI    12
+#define FUTEX_WAIT_MULTIPLE     13
 #define FUTEX_PRIVATE_FLAG	128
 #define FUTEX_CLOCK_REALTIME	256
 
@@ -73,6 +74,14 @@
      ? -INTERNAL_SYSCALL_ERRNO (__ret) : 0);                     	\
   })
 
+# define lll_futex_syscall_ret(nargs, futexp, op, ...)                  \
+  ({                                                                    \
+    long int __ret = INTERNAL_SYSCALL (futex, nargs, futexp, op,        \
+                                       __VA_ARGS__);                    \
+    (__glibc_unlikely (INTERNAL_SYSCALL_ERROR_P (__ret))                \
+     ? -INTERNAL_SYSCALL_ERRNO (__ret) : __ret);                        \
+  })
+
 /* For most of these macros, the return value is never really used.
    Nevertheless, the protocol is that each one returns a negated errno
    code for failure or zero for success.  (Note that the corresponding
@@ -87,6 +96,11 @@
 # define lll_futex_timed_wait(futexp, val, timeout, private)     \
   lll_futex_syscall (4, futexp,                                 \
 		     __lll_private_flag (FUTEX_WAIT, private),  \
+		     val, timeout)
+
+# define lll_futex_timed_wait_multiple(futexp, val, timeout, private)    \
+  lll_futex_syscall_ret (4, futexp,                                      \
+		     __lll_private_flag (FUTEX_WAIT_MULTIPLE, private),  \
 		     val, timeout)
 
 /* Verify whether the supplied clockid is supported by
