@@ -390,6 +390,11 @@ extern int __pthread_mutex_trylock (pthread_mutex_t *_mutex);
 extern int __pthread_mutex_lock (pthread_mutex_t *__mutex);
 extern int __pthread_mutex_timedlock (pthread_mutex_t *__mutex,
      const struct timespec *__abstime);
+extern int __pthread_mutex_lock_any (pthread_mutex_t *__mutex, int mutexcount,
+				     int *outlocked);
+extern int __pthread_mutex_timedlock_any (pthread_mutex_t *__mutex, int count,
+					  const struct timespec *__abstime,
+					  int *outlocked);
 extern int __pthread_mutex_cond_lock (pthread_mutex_t *__mutex)
      attribute_hidden;
 extern void __pthread_mutex_cond_lock_adjust (pthread_mutex_t *__mutex)
